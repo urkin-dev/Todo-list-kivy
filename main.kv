@@ -1,0 +1,72 @@
+#:kivy 1.11.1
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+#:include menu.kv
+
+ScreenManagement:
+    transition: NoTransition()
+    MainScreen:
+    AnotherScreen:
+
+<MainScreen>:
+    name: "main"
+    main_window: main
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        Menu:
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                GridLayout:
+                    padding: (0, 25, 0, 0)
+                    id: main
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+        Widget:
+            size_hint: (.17, 1)
+
+<AnotherScreen>:
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        Menu:
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                GridLayout:
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    Button:
+                        text: "another screen"
+                        size_hint: (1, None)
+                        height: 100
+        Widget:
+            size_hint: (.17, 1)

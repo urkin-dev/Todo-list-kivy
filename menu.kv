@@ -1,0 +1,54 @@
+#:kivy 1.11.1 
+
+<Menu>:
+    size_hint: (.25, 1)
+    BoxLayout:
+        size_hint: (1, .3)
+        pos_hint: {"x": 0, "top": .97}
+        orientation: "vertical"
+        Button:
+            text: "Item 1"
+            size_hint: (1, .1)
+            color: (0, 0, 0, 1)
+            background_color: (1, 1, 1, 0)
+            on_release: app.root.current = "main"
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 1.3
+                    bezier: self.x, self.y, self.x + self.width, self.y
+        Button:
+            text: "Item 2"
+            size_hint: (1, .1)
+            color: (0, 0, 0, 1)
+            background_color: (1, 1, 1, 0)
+            on_release: app.root.current = "second"
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 1.3
+                    bezier: self.x, self.y, self.x + self.width, self.y
+        Button:
+            text: "Item 3"
+            size_hint: (1, .1)
+            color: (0, 0, 0, 1)
+            background_color: (1, 1, 1, 0)
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 1.3
+                    bezier: self.x, self.y, self.x + self.width, self.y
+        Button:
+            text: "Item 4"
+            size_hint: (1, .1)
+            color: (0, 0, 0, 1)
+            background_color: (1, 1, 1, 0)
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 1.3
+                    bezier: self.x, self.y, self.x + self.width, self.y

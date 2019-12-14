@@ -36,10 +36,22 @@ ScreenManagement:
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        size_hint: (1, None)
+                        height: 37
+                        orientation: "horizontal"
+                        Label:
+                            text: "All tasks"
+                            font_size: 25
+                            color: (0, 0, 0, 1)
+                            size_hint: (None, None)
+                            size: (125, 40)         
         Widget:
             size_hint: (.17, 1)
 
 <AnotherScreen>:
+    name: "second"
     BoxLayout:
         orientation: "horizontal"
         # Side bar
@@ -61,12 +73,26 @@ ScreenManagement:
                         size: self.size
                         pos: self.pos
                 GridLayout:
+                    padding: (0, 25, 0, 0)
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
-                    Button:
-                        text: "another screen"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
                         size_hint: (1, None)
-                        height: 100
+                        height: 37
+                        orientation: "horizontal"
+                        Label:
+                            text: "Today"
+                            font_size: 25
+                            color: (0, 0, 0, 1)
+                            size_hint: (None, None)
+                            size: (90, 40)
+                        Label:
+                            text: "date"
+                            font_size: 13
+                            color: (67, 50, 59, 1)
+                            size_hint: (None, None)
+                            size: (20, 32)
         Widget:
             size_hint: (.17, 1)

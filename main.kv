@@ -9,7 +9,8 @@ ScreenManagement:
 
 <MainScreen>:
     name: "Tasks"
-    main_window: main
+    box: wrapper
+    task_text: task_in
     BoxLayout:
         orientation: "horizontal"
         # Side bar
@@ -23,30 +24,52 @@ ScreenManagement:
                     width: 2
                     rectangle: self.x, self.y, self.width, self.height
             size_hint: (.8, 1)
-            ScrollView:
+            BoxLayout:
+                orientation: "vertical"
                 canvas.before:
                     Color:
                         rgba: (1, 1, 1, 1)
                     Rectangle:
                         size: self.size
                         pos: self.pos
+                padding: (20, 25, 20, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "All tasks"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (105, 40)
                 GridLayout:
-                    padding: (0, 25, 0, 0)
-                    id: main
-                    cols: 1
                     size_hint_y: None
-                    height: self.minimum_height
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
+                    height: 80
+                    spacing: 20
+                    cols: 1
+                    TextInput:
+                        id: task_in
+                        hint_text: "Add your task"
+                        allow_copy: True
+                        background_color: (1 ,1, 1, 0)
                         size_hint: (1, None)
-                        height: 37
-                        orientation: "horizontal"
-                        Label:
-                            text: "All tasks"
-                            font_size: 25
-                            color: (0, 0, 0, 1)
-                            size_hint: (None, None)
-                            size: (125, 40)         
+                        height: 30
+                    Button:
+                        text: "Add task"
+                        size_hint: (None, None)
+                        width: 80
+                        height: 30
+                        on_release: root.add_task()
+                # Tasks list
+                ScrollView:
+                    GridLayout:
+                        id: wrapper
+                        orientation: "vertical"
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
         Widget:
             size_hint: (.17, 1)
 

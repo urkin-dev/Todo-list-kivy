@@ -1,15 +1,20 @@
 #  -*- coding: utf-8 -*-
 
 from kivy.app import App
+
 from kivy.core.window import Window
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+
+from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+import matplotlib.pyplot as plt
 
 Window.clearcolor = (.98, .98 ,.98, 1)
 
@@ -73,18 +78,11 @@ class MainScreen(Screen):
     input = ObjectProperty()
     box = ObjectProperty()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        Clock.schedule_once(self._finish_init)
-
     def add_task(self):
         if (self.input.text == ""):
             return
 
         self.box.add_widget(Task(self.input.text))
-
-    def _finish_init(self, dt):
-        pass
 
 class Today(Screen):
     input = ObjectProperty()
@@ -102,6 +100,19 @@ class Today(Screen):
 
     def _finish_init(self, dt):
         pass
+
+class Statistics(Screen):
+    box = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self._build_graph)
+    
+    def _build_graph(self, dt):
+        plt.plot([1, 23, 2, 4])
+        plt.ylabel('some numbers')
+
+        self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
 class ScreenManagement(ScreenManager):
     pass

@@ -109,8 +109,17 @@ class Statistics(Screen):
         Clock.schedule_once(self._build_graph)
     
     def _build_graph(self, dt):
-        plt.plot([1, 23, 2, 4])
-        plt.ylabel('some numbers')
+        plt.title("2019 December")
+        plt.ylabel('Points')
+        plt.xlabel("Days")
+        
+        s = [10, 30, 50, 30, 10, 10, 0, 50, 10, 30, 50, 30, 10, 10, 0, 50]
+        days = ["07", "08", "09", "10", "11", "12", "13", "14", "07", "08", "09", "10", "11", "12", "13", "14"]
+        x = range(len(s))
+        ax = plt.gca()
+        ax.bar(x, s, align = "edge")
+        ax.set_xticks(x)
+        ax.set_xticklabels(days)
 
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 

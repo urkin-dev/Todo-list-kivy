@@ -24,7 +24,7 @@ Window.clearcolor = (.98, .98 ,.98, 1)
 class Task(BoxLayout):
 
     lb = ObjectProperty()
-    editBtn = ObjectProperty()
+    edit = ObjectProperty()
     favorite = ObjectProperty()
     imageEdit = ObjectProperty()
 
@@ -34,28 +34,22 @@ class Task(BoxLayout):
         self.text = text
         self.lb.text = self.text
 
-        self.func_1 = lambda x: self.edit_task()
-        self.func_2 = lambda x: self.save_task()
-
         self.favorite.bind(active = self.add_to_favorites)
 
-        self.editBtn.bind(on_press = self.func_1)
+        self.edit.bind(active = self.edit_task)
 
-    def edit_task(self):
+    def edit_task(self, checkbox, value):
         self.clear_widgets()
         self.editInput = TextInput(text = self.lb.text, size_hint = (1, None), height = 30, pos_hint = {"x": 0, "y": .3})
 
-        self.editBtn.text = "Save"
-        self.imageEdit.source = "./image/save.png"
-
-        self.editBtn.unbind(on_press = self.func_1)
-        self.editBtn.bind(on_press = self.func_2)
+        self.edit.unbind(active = self.edit_task)
+        self.edit.bind(active = self.save_task)
 
         self.add_widget(self.editInput)
-        self.add_widget(self.editBtn)
+        self.add_widget(self.edit)
         self.add_widget(self.favorite)
 
-    def save_task(self):
+    def save_task(self, checkbox, value):
         self.clear_widgets()
 
         if (self.editInput.text == ""):
@@ -64,14 +58,11 @@ class Task(BoxLayout):
 
         self.lb.text = self.editInput.text
 
-        self.editBtn.text = "Edit"
-        self.imageEdit.source = "./image/edit.png"
-
-        self.editBtn.unbind(on_press = self.func_2)
-        self.editBtn.bind(on_press = self.func_1)
+        self.edit.unbind(active = self.save_task)
+        self.edit.bind(active = self.edit_task)
 
         self.add_widget(self.lb)
-        self.add_widget(self.editBtn)
+        self.add_widget(self.edit)
         self.add_widget(self.favorite)
 
     def add_to_favorites(self, checkbox, value):

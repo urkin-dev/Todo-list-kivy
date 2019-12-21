@@ -56,12 +56,21 @@
                         background_color: (1 ,1, 1, 0)
                         size_hint: (1, None)
                         height: 30
-                    Button:
-                        text: "Add task"
-                        size_hint: (None, None)
-                        width: 80
-                        height: 30
-                        on_release: root.add_task()
+                    BoxLayout:
+                        orientation: "horizontal"
+                        Button:
+                            text: "Add task"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.add_task()
+                        Button:
+                            text: "Set time"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.show_datepicker()
+                        
                 # Tasks list
                 ScrollView:
                     size_hint: (1, 1)
@@ -71,6 +80,5 @@
                         cols: 1
                         size_hint_y: None
                         height: self.minimum_height
-                        spacing: 15
         Widget:
             size_hint: (.17, 1)

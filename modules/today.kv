@@ -43,11 +43,10 @@
                         font_size: 13
                         color: (67, 50, 59, 1)
                         size_hint: (None, None)
-                        size: (20, 32)
+                        size: (25, 32)
                 GridLayout:
                     size_hint: (.6, None)
                     height: 80
-                    spacing: 10
                     cols: 1
                     TextInput:
                         canvas.before:
@@ -62,12 +61,20 @@
                         background_color: (1 ,1, 1, 0)
                         size_hint: (1, None)
                         height: 30
-                    Button:
-                        text: "Add task"
-                        size_hint: (None, None)
-                        width: 80
-                        height: 30
-                        on_release: root.add_task()
+                    BoxLayout:
+                        orientation: "horizontal"
+                        Button:
+                            text: "Add task"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.add_task()
+                        Button:
+                            text: "Set time"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.show_datepicker()
                 # Tasks list
                 ScrollView:
                     size_hint: (1, 1)

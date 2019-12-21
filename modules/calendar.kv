@@ -1,0 +1,43 @@
+#:kivy 1.11.1
+
+<Calendar>:
+    name: "Calendar"
+    box: wrapper
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        Menu:
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            BoxLayout:
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                padding: (30, 25, 30, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "Calendar"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (105, 40)
+                BoxLayout:
+                    id: wrapper
+                    size_hint: (1, 1)
+        Widget:
+            size_hint: (.17, 1)

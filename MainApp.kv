@@ -1,0 +1,694 @@
+#:kivy 1.11.1
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+ScreenManagement:
+    transition: NoTransition()
+    MainScreen:
+    Today:
+    Statistics:
+    Calendar:
+
+<MainScreen>:
+    name: "Tasks"
+    input: task_in
+    box: wrapper
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        BoxLayout:
+            size_hint: (.25, 1)
+            BoxLayout:
+                size_hint: (1, .3)
+                pos_hint: {"x": 0, "top": .97}
+                orientation: "vertical"
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Tasks"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: "./image/tasks.png"
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "All tasks"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Today"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/today.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Today"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/important.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Important"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Calendar"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 7
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/calendar.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Calendar"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Statistics"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/stats.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Statistics"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            BoxLayout:
+                spacing: 20
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                padding: (30, 25, 30, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "All tasks"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (105, 40)
+                GridLayout:
+                    size_hint: (.6, None)
+                    height: 80
+                    spacing: 10
+                    cols: 1
+                    TextInput:
+                        canvas.before:
+                            Color:
+                                rgba: (.29, .4, .3, 1)
+                            Line:
+                                width: .5
+                                rectangle: self.x, self.y, self.width, self.height
+                        id: task_in
+                        hint_text: "Add your task"
+                        allow_copy: True
+                        background_color: (1 ,1, 1, 0)
+                        size_hint: (1, None)
+                        height: 30
+                    BoxLayout:
+                        orientation: "horizontal"
+                        Button:
+                            text: "Add task"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.add_task()
+                        Button:
+                            text: "Set time"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.show_datepicker()
+                        
+                # Tasks list
+                ScrollView:
+                    size_hint: (1, 1)
+                    GridLayout:
+                        size_hint: (.6, 1)
+                        id: wrapper
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+        Widget:
+            size_hint: (.17, 1)
+
+<Today>:
+    name: "Today"
+    input: task_in
+    box: wrapper
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        BoxLayout:
+            size_hint: (.25, 1)
+            BoxLayout:
+                size_hint: (1, .3)
+                pos_hint: {"x": 0, "top": .97}
+                orientation: "vertical"
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Tasks"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: "./image/tasks.png"
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "All tasks"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Today"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/today.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Today"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/important.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Important"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Calendar"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 7
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/calendar.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Calendar"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Statistics"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/stats.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Statistics"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            BoxLayout:
+                spacing: 20
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                padding: (30, 25, 30, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "Today"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (65, 40)
+                    Label:
+                        text: "date"
+                        font_size: 13
+                        color: (67, 50, 59, 1)
+                        size_hint: (None, None)
+                        size: (25, 32)
+                GridLayout:
+                    size_hint: (.6, None)
+                    height: 80
+                    cols: 1
+                    TextInput:
+                        canvas.before:
+                            Color:
+                                rgba: (.29, .4, .3, 1)
+                            Line:
+                                width: .5
+                                rectangle: self.x, self.y, self.width, self.height
+                        id: task_in
+                        hint_text: "Add your task"
+                        allow_copy: True
+                        background_color: (1 ,1, 1, 0)
+                        size_hint: (1, None)
+                        height: 30
+                    BoxLayout:
+                        orientation: "horizontal"
+                        Button:
+                            text: "Add task"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.add_task()
+                        Button:
+                            text: "Set time"
+                            size_hint: (None, None)
+                            width: 80
+                            height: 30
+                            on_release: root.show_datepicker()
+                # Tasks list
+                ScrollView:
+                    size_hint: (1, 1)
+                    GridLayout:
+                        size_hint: (.6, 1)
+                        id: wrapper
+                        orientation: "vertical"
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: 15
+        Widget:
+            size_hint: (.17, 1)
+<Statistics>:
+    name: "Statistics"
+    box: wrapper
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        BoxLayout:
+            size_hint: (.25, 1)
+            BoxLayout:
+                size_hint: (1, .3)
+                pos_hint: {"x": 0, "top": .97}
+                orientation: "vertical"
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Tasks"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: "./image/tasks.png"
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "All tasks"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Today"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/today.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Today"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/important.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Important"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Calendar"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 7
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/calendar.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Calendar"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Statistics"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/stats.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Statistics"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            BoxLayout:
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                padding: (30, 25, 30, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "Statistics"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (105, 40)
+                BoxLayout:
+                    id: wrapper
+                    size_hint: (1, 1)
+        Widget:
+            size_hint: (.17, 1)
+
+<Calendar>:
+    name: "Calendar"
+    box: wrapper
+    BoxLayout:
+        orientation: "horizontal"
+        # Side bar
+        BoxLayout:
+            size_hint: (.25, 1)
+            BoxLayout:
+                size_hint: (1, .3)
+                pos_hint: {"x": 0, "top": .97}
+                orientation: "vertical"
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Tasks"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: "./image/tasks.png"
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "All tasks"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Today"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/today.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Today"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/important.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Important"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Calendar"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 7
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/calendar.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Calendar"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+                Button:
+                    size_hint: (1, .1)
+                    background_color: (1, 1, 1, 0)
+                    on_release: app.root.current = "Statistics"
+                    BoxLayout:
+                        padding: (10, 0, 0, 0)
+                        spacing: 10
+                        orientation: "horizontal"
+                        size: self.parent.size
+                        pos: self.parent.pos
+                        Image:
+                            source: './image/stats.png'
+                            size_hint_x: None
+                            width: 20
+                        Label:
+                            text: "Statistics"
+                            color: (0, 0, 0, 1)
+                            size_hint_x: None
+                            width: 70
+        # Main
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (.95, .95, .95, 1)
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+            size_hint: (.8, 1)
+            BoxLayout:
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: (1, 1, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                padding: (30, 25, 30, 0)
+                # Title
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "Calendar"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (105, 40)
+                BoxLayout:
+                    id: wrapper
+                    size_hint: (1, 1)
+        Widget:
+            size_hint: (.17, 1)
+<Task>:
+    lb: text
+    editBtn: edit
+    favorite: fav
+    imageEdit: editImage
+    # lb: text
+    orientation: "horizontal"
+    size_hint: (1, None)
+    height: 60
+    spacing: 10
+    Label:
+        id: text
+        color: (0, 0, 0, 1)
+        size_hint: 1, 1
+        text_size: self.size
+        halign:  "left"
+        valign: "middle"
+    Button:
+        id: edit
+        text: "edit"
+        size_hint: (None, None)
+        size: (30, 30)
+        pos_hint: {"x": 0, "y": .3}
+        background_color: (1, 1, 1, 0)
+        Image:
+            id: editImage
+            source: "./image/edit.png"
+            size_hint_y: None
+            width: 30
+            x: self.parent.x
+            y: self.parent.y - self.parent.height - 5
+    CheckBox:
+        id: fav
+        size_hint: (None, None)
+        size: (30, 30)
+        pos_hint: {"x": 0, "y": .3}
+        background_checkbox_normal: "./image/star.png"
+        background_checkbox_down: "./image/star_a.png"

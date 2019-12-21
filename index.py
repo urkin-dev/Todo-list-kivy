@@ -141,9 +141,6 @@ class Statistics(Screen):
 
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
-class Calendar(Screen):
-    pass
-
 class ScreenManagement(ScreenManager):
     pass
 

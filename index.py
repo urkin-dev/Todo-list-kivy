@@ -7,76 +7,40 @@ from kivy.properties import ObjectProperty
 from kivy.clock import Clock
 
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
-from kivy.uix.checkbox import CheckBox
 from kivymd.uix.picker import MDDatePicker
-from kivy.uix.image import Image
-
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 
+from Task import Task
+
+import datetime
+
 Window.clearcolor = (.98, .98 ,.98, 1)
 
-
-class Task(BoxLayout):
-
-    lb = ObjectProperty()
-    edit = ObjectProperty()
-    favorite = ObjectProperty()
-    imageEdit = ObjectProperty()
-
-    def __init__(self, text):
-        super().__init__()
-
-        self.text = text
-        self.lb.text = self.text
-
-        self.favorite.bind(active = self.add_to_favorites)
-
-        self.edit.bind(active = self.edit_task)
-
-    def edit_task(self, checkbox, value):
-        self.clear_widgets()
-        self.editInput = TextInput(text = self.lb.text, size_hint = (1, None), height = 30, pos_hint = {"x": 0, "y": .3})
-
-        self.edit.unbind(active = self.edit_task)
-        self.edit.bind(active = self.save_task)
-
-        self.add_widget(self.editInput)
-        self.add_widget(self.edit)
-        self.add_widget(self.favorite)
-
-    def save_task(self, checkbox, value):
-        self.clear_widgets()
-
-        if (self.editInput.text == ""):
-            self.parent.remove_widget(self)
-            return
-
-        self.lb.text = self.editInput.text
-
-        self.edit.unbind(active = self.save_task)
-        self.edit.bind(active = self.edit_task)
-
-        self.add_widget(self.lb)
-        self.add_widget(self.edit)
-        self.add_widget(self.favorite)
-
-    def add_to_favorites(self, checkbox, value):
-        print(value)
-
 class MainScreen(Screen):
-    input = ObjectProperty()
-    box = ObjectProperty()
+
+    input     = ObjectProperty()
+    box       = ObjectProperty()
+    dateLabel = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self._finitsh_init)
+
+    def _finitsh_init(self, dt):
+        # Assign label current date
+        self.dateLabel.text = str(datetime.datetime.now().date().strftime("%b %d, %Y"))
 
     def add_task(self):
+        # If input haven't text
         if (self.input.text == ""):
             return
 
-        self.box.add_widget(Task(self.input.text))
+        # If time was chosen
+        if (hasattr(self, "dt")):
+            self.box.add_widget(Task(self.input.text, self.dt))
+        else:
+            self.box.add_widget(Task(self.input.text, datetime.datetime.now().date()))
 
     def show_datepicker(self):
         picker = MDDatePicker(callback = self.get_date)
@@ -84,31 +48,27 @@ class MainScreen(Screen):
 
     def get_date(self, dt):
         self.dt = dt
-        print(self.dt)
+        self.dateLabel.text = self.dt.strftime("%b %d, %Y")
 
 class Today(Screen):
+
     input = ObjectProperty()
-    box = ObjectProperty()
+    box   = ObjectProperty()
+    date  = ObjectProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         Clock.schedule_once(self._finish_init)
+
+    def _finish_init(self, dt):
+        currentDate = datetime.datetime.now().date()
+        self.date.text = currentDate.strftime("%d %B")
 
     def add_task(self):
         if (self.input.text == ""):
             return
 
         self.box.add_widget(Task(self.input.text))
-
-    def show_datepicker(self):
-        picker = MDDatePicker(callback = self.get_date)
-        picker.open()
-
-    def get_date(self, dt):
-        print(dt)
-
-    def _finish_init(self, dt):
-        pass
 
 class Statistics(Screen):
     box = ObjectProperty()

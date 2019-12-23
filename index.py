@@ -15,6 +15,8 @@ from Task import Task
 
 import datetime
 
+import sqlite3
+
 Window.clearcolor = (.98, .98 ,.98, 1)
 
 class MainScreen(Screen):
@@ -30,17 +32,24 @@ class MainScreen(Screen):
     def _finitsh_init(self, dt):
         # Assign label current date
         self.dateLabel.text = str(datetime.datetime.now().date().strftime("%b %d, %Y"))
+        self.dt = datetime.datetime.now().date()
+        self.update()
 
     def add_task(self):
         # If input haven't text
         if (self.input.text == ""):
             return
 
-        # If time was chosen
-        if (hasattr(self, "dt")):
-            self.box.add_widget(Task(self.input.text, self.dt))
-        else:
-            self.box.add_widget(Task(self.input.text, datetime.datetime.now().date()))
+        self.box.add_widget(Task(0, self.input.text, self.dt.strftime("%b %d"), 0))
+        self.input.text = ""
+
+        # Update Today screen
+        today = self.manager.get_screen("Today")
+        today.update()
+
+        # Update important screen
+        imp = self.manager.get_screen("Important")
+        imp.update()
 
     def show_datepicker(self):
         picker = MDDatePicker(callback = self.get_date)
@@ -50,6 +59,14 @@ class MainScreen(Screen):
         self.dt = dt
         self.dateLabel.text = self.dt.strftime("%b %d, %Y")
 
+    def update(self):
+        self.conn = sqlite3.connect("./db/todo.db")
+        self.c = self.conn.cursor()
+
+        self.box.clear_widgets()
+        for task in self.c.execute("SELECT * FROM tasks"):
+            self.box.add_widget(Task(task[0], task[1], task[2], task[3]))
+
 class Today(Screen):
 
     input = ObjectProperty()
@@ -58,17 +75,55 @@ class Today(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.currentDate = datetime.datetime.now().date().strftime("%b %d")
         Clock.schedule_once(self._finish_init)
 
     def _finish_init(self, dt):
-        currentDate = datetime.datetime.now().date()
-        self.date.text = currentDate.strftime("%d %B")
+        self.date.text = self.currentDate
+        self.update()
 
     def add_task(self):
         if (self.input.text == ""):
             return
 
-        self.box.add_widget(Task(self.input.text))
+        self.box.add_widget(Task(0, self.input.text, self.currentDate, 0))
+        
+        self.input.text = ""
+
+        # Update main screen
+        main = self.manager.get_screen("Tasks")
+        main.update()
+        
+        # Update important screen
+        imp = self.manager.get_screen("Important")
+        imp.update()
+    
+    def update(self):
+        self.conn = sqlite3.connect("./db/todo.db")
+        self.c = self.conn.cursor()
+
+        self.box.clear_widgets()
+        for task in self.c.execute("SELECT * FROM tasks WHERE date = ?", [self.currentDate]):
+            self.box.add_widget(Task(task[0], task[1], task[2], task[3]))
+
+class Important(Screen):
+
+    box = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Clock.schedule_once(self._finish_init)
+
+    def _finish_init(self, dt):
+        self.update()
+
+    def update(self):
+        self.conn = sqlite3.connect("./db/todo.db")
+        self.c = self.conn.cursor()
+
+        self.box.clear_widgets()
+        for task in self.c.execute("SELECT * FROM tasks WHERE favorite = ?", [1]):
+            self.box.add_widget(Task(task[0], task[1], task[2], task[3]))
 
 class Statistics(Screen):
     box = ObjectProperty()

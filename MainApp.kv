@@ -1,11 +1,12 @@
 #:kivy 1.11.1
 #: import NoTransition kivy.uix.screenmanager.NoTransition
+#:include Menu.kv
 
 ScreenManagement:
     transition: NoTransition()
     MainScreen:
     Today:
-    Important:
+    Important_tasks:
     Statistics:
 
 <MainScreen>:
@@ -16,87 +17,7 @@ ScreenManagement:
     BoxLayout:
         orientation: "horizontal"
         # Side bar
-        BoxLayout:
-            size_hint: (.25, 1)
-            BoxLayout:
-                size_hint: (1, .25)
-                pos_hint: {"x": 0, "top": .97}
-                orientation: "vertical"
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Tasks"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: "./image/tasks.png"
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "All tasks"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Today"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/today.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Today"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Important"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/important.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Important"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Statistics"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/stats.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Statistics"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
+        Menu:
         # Main
         BoxLayout:
             canvas.before:
@@ -200,87 +121,7 @@ ScreenManagement:
     BoxLayout:
         orientation: "horizontal"
         # Side bar
-        BoxLayout:
-            size_hint: (.25, 1)
-            BoxLayout:
-                size_hint: (1, .25)
-                pos_hint: {"x": 0, "top": .97}
-                orientation: "vertical"
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Tasks"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: "./image/tasks.png"
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "All tasks"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Today"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/today.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Today"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Important"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/important.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Important"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Statistics"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/stats.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Statistics"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
+        Menu:
         # Main
         BoxLayout:
             canvas.before:
@@ -318,7 +159,7 @@ ScreenManagement:
                         size_hint: (None, None)
                         size: (100, 32)
                 GridLayout:
-                    size_hint: (.6, None)
+                    size_hint: (.5, None)
                     height: 80
                     cols: 1
                     TextInput:
@@ -356,95 +197,14 @@ ScreenManagement:
                         height: self.minimum_height
         Widget:
             size_hint: (.17, 1)
-<Important>:
-    
-    name: "Important"
-    box: wrapper
-
+<Important_tasks>:
+    name: "Important_tasks"
+    important_box: first_wrapper
+    expiring_box: second_wrapper
     BoxLayout:
         orientation: "horizontal"
         # Side bar
-        BoxLayout:
-            size_hint: (.25, 1)
-            BoxLayout:
-                size_hint: (1, .25)
-                pos_hint: {"x": 0, "top": .97}
-                orientation: "vertical"
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Tasks"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: "./image/tasks.png"
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "All tasks"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Today"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/today.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Today"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Important"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/important.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Important"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Statistics"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/stats.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Statistics"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
+        Menu:
         # Main
         BoxLayout:
             canvas.before:
@@ -464,23 +224,44 @@ ScreenManagement:
                         size: self.size
                         pos: self.pos
                 padding: (30, 25, 30, 0)
-                # Title
+                # Title 1
                 BoxLayout:
                     size_hint: (1, None)
                     height: 37
                     orientation: "horizontal"
                     Label:
-                        text: "Important"
+                        text: "Favorites"
                         font_size: 25
                         color: (0, 0, 0, 1)
                         size_hint: (None, None)
                         size: (100, 40)
-                # Tasks list
+                # Important tasks list
                 ScrollView:
                     size_hint: (1, 1)
                     GridLayout:
                         size_hint: (.98, 1)
-                        id: wrapper
+                        id: first_wrapper
+                        orientation: "vertical"
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                # Title 2
+                BoxLayout:
+                    size_hint: (1, None)
+                    height: 37
+                    orientation: "horizontal"
+                    Label:
+                        text: "Expiring Tasks"
+                        font_size: 25
+                        color: (0, 0, 0, 1)
+                        size_hint: (None, None)
+                        size: (150, 40)
+                # Expiring tasks list
+                ScrollView:
+                    size_hint: (1, 1)
+                    GridLayout:
+                        size_hint: (.98, 1)
+                        id: second_wrapper
                         orientation: "vertical"
                         cols: 1
                         size_hint_y: None
@@ -493,87 +274,7 @@ ScreenManagement:
     BoxLayout:
         orientation: "horizontal"
         # Side bar
-        BoxLayout:
-            size_hint: (.25, 1)
-            BoxLayout:
-                size_hint: (1, .25)
-                pos_hint: {"x": 0, "top": .97}
-                orientation: "vertical"
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Tasks"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: "./image/tasks.png"
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "All tasks"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Today"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/today.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Today"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Important"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/important.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Important"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
-                Button:
-                    size_hint: (1, .1)
-                    background_color: (1, 1, 1, 0)
-                    on_release: app.root.current = "Statistics"
-                    BoxLayout:
-                        padding: (10, 0, 0, 0)
-                        spacing: 10
-                        orientation: "horizontal"
-                        size: self.parent.size
-                        pos: self.parent.pos
-                        Image:
-                            source: './image/stats.png'
-                            size_hint_x: None
-                            width: 20
-                        Label:
-                            text: "Statistics"
-                            color: (0, 0, 0, 1)
-                            size_hint_x: None
-                            width: 70
+        Menu:
         # Main
         BoxLayout:
             canvas.before:
@@ -591,18 +292,27 @@ ScreenManagement:
                     Rectangle:
                         size: self.size
                         pos: self.pos
-                padding: (30, 25, 30, 0)
+                padding: (0, 25, 0, 0)
                 # Title
                 BoxLayout:
                     size_hint: (1, None)
                     height: 37
                     orientation: "horizontal"
+                    spacing: self.width - (160 + 140)
                     Label:
                         text: "Statistics"
                         font_size: 25
                         color: (0, 0, 0, 1)
                         size_hint: (None, None)
-                        size: (105, 40)
+                        size: (160, 40)
+                    Button:
+                        text: "Update statistics"
+                        size_hint: (None, None)
+                        width: 120
+                        height: 30
+                        font_size: 12
+                        y: -10
+                        on_release: root.updateStats()
                 BoxLayout:
                     id: wrapper
                     size_hint: (1, 1)

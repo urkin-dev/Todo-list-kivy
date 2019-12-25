@@ -1,0 +1,83 @@
+#:kivy 1.11.1 
+
+<Menu>:
+    size_hint: (.25, 1)
+    BoxLayout:
+        size_hint: (1, .25)
+        pos_hint: {"x": 0, "top": .97}
+        orientation: "vertical"
+        Button:
+            size_hint: (1, .1)
+            background_color: (1, 1, 1, 0)
+            on_release: root.updateScreen("Tasks")
+            BoxLayout:
+                padding: (10, 0, 0, 0)
+                spacing: 10
+                orientation: "horizontal"
+                size: self.parent.size
+                pos: self.parent.pos
+                Image:
+                    source: "./image/tasks.png"
+                    size_hint_x: None
+                    width: 20
+                Label:
+                    text: "All tasks"
+                    color: (0, 0, 0, 1)
+                    size_hint_x: None
+                    width: 70
+        Button:
+            size_hint: (1, .1)
+            background_color: (1, 1, 1, 0)
+            on_release: root.updateScreen("Today")
+            BoxLayout:
+                padding: (10, 0, 0, 0)
+                orientation: "horizontal"
+                size: self.parent.size
+                pos: self.parent.pos
+                Image:
+                    source: './image/today.png'
+                    size_hint_x: None
+                    width: 20
+                Label:
+                    text: "Today"
+                    color: (0, 0, 0, 1)
+                    size_hint_x: None
+                    width: 70
+        Button:
+            size_hint: (1, .1)
+            background_color: (1, 1, 1, 0)
+            on_release: root.updateScreen("Important_tasks")
+            BoxLayout:
+                padding: (10, 0, 0, 0)
+                spacing: 10
+                orientation: "horizontal"
+                size: self.parent.size
+                pos: self.parent.pos
+                Image:
+                    source: './image/important.png'
+                    size_hint_x: None
+                    width: 20
+                Label:
+                    text: "Important"
+                    color: (0, 0, 0, 1)
+                    size_hint_x: None
+                    width: 70
+        Button:
+            size_hint: (1, .1)
+            background_color: (1, 1, 1, 0)
+            on_release: root.updateScreen("Statistics")
+            BoxLayout:
+                padding: (10, 0, 0, 0)
+                spacing: 10
+                orientation: "horizontal"
+                size: self.parent.size
+                pos: self.parent.pos
+                Image:
+                    source: './image/stats.png'
+                    size_hint_x: None
+                    width: 20
+                Label:
+                    text: "Statistics"
+                    color: (0, 0, 0, 1)
+                    size_hint_x: None
+                    width: 70

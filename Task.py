@@ -13,6 +13,7 @@ from kivy.uix.screenmanager import Screen
 
 import sqlite3
 import uuid
+import datetime
 
 class Task(BoxLayout):
 
@@ -80,43 +81,44 @@ class Task(BoxLayout):
         self.add_widget(self.time)
 
         self.updateDB("name", self.lb.text)
-        self.updateScreens()
 
     def add_to_favorites(self, checkbox, value):
         if (value):
             self.updateDB("favorite", 1)
         else:
             self.updateDB("favorite", 0)
-
-        self.updateScreens()
         
     def done(self, checkbox, value):
+        self.checkbox.unbind(active = self.done)
         self.lb.strikethrough = True
-        # self.lb.text = self.lb.text + " +10 Points"
+        self.lb.text = self.lb.text + " +10 Points"
+        self.add_points(10)
         
+        Clock.schedule_once(lambda x: self.parent.remove_widget(self), 1)
+
         # Delete task from db
         self.c.execute("DELETE FROM tasks WHERE id = ?", [self.id])
         self.conn.commit()
-
-        self.updateScreens()
 
     def show_datepicker(self, instance):
         MDDatePicker(callback = self.get_date).open()
         
     def get_date(self, dt):
+        if (dt < datetime.datetime.now().date()):
+            return
         self.labelDate.text = dt.strftime("%b %d")
         self.updateDB("date", dt.strftime("%b %d"))
-        self.updateScreens()
+
+        # Update screen Today
+        self.get_root_window().children[1].get_screen("Today").update()
 
     def updateDB(self, propName, value):
         sql = "UPDATE tasks SET {0} = ? WHERE id = ?".format(propName)
         self.c.execute(sql, [value, self.id])
         self.conn.commit()
 
-    def updateScreens(self):
-        root_objects = self.get_root_window().children
-        for obj in root_objects:
-            if (hasattr(obj, "get_screen")):
-                obj.get_screen("Tasks").update()
-                obj.get_screen("Today").update()
-                obj.get_screen("Important").update()
+    def add_points(self, value):
+        today = datetime.datetime.now().day
+        
+        self.c.execute("UPDATE points SET points = points + 10 WHERE day = ?", [today])
+        self.conn.commit()
